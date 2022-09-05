@@ -14,7 +14,7 @@ function onPageLoad() {
         if (selected_items.length > 1) {
             createPlaylist();
             //window.location.replace('https://spotify-playlist-merge.herokuapp.com/result.html');
-        } 
+        }
     });
     document.getElementById('merge_instructions').appendChild(btn);
     saveTokens();
@@ -39,7 +39,7 @@ async function getPlaylists() {
             'Content-Type': 'application/json'
         }
     };
-    
+
     const response = await fetch(api_url, body);
     const json = await response.json();
     // console.log(json);
@@ -97,12 +97,12 @@ function displayPlaylists() {
                 btn.style.backgroundColor = 'rgb(219, 219, 219)';
                 var index = selected_items.indexOf(btn.getAttribute('name'));
                 selected_items.splice(index, 1);
-                //console.log(selected_items);
+                console.log(selected_items);
             }
             else {
                 btn.style.backgroundColor = 'green';
                 selected_items.push(btn.getAttribute('name'));
-                //console.log(selected_items);
+                console.log(selected_items);
             }
         });
         document.getElementById(pos + row).appendChild(btn);
@@ -118,6 +118,7 @@ function displayPlaylists() {
         }
     }
 }
+
 
 function createPlaylist() {
     const api_url = 'https://api.spotify.com/v1/me/playlists';
@@ -146,13 +147,13 @@ function createPlaylist() {
     });
 }
 
-function addSongs() {
-    let curr_size = 1;
+async function addSongs() {
 
     for (let i = 0; i < selected_items.length; i++) {
         let playlist_id = selected_items[i];
         let offset = 0;
-        
+        let curr_size = 100;
+
         while (offset < curr_size) {
             let fetch_api_url = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks?fields=total,items.track.id&limit=100&offset=${offset}`
 
@@ -162,33 +163,33 @@ function addSongs() {
                     'Content-Type': 'application/json'
                 },
             };
-            
+
             fetch(fetch_api_url, fetch_body).then((response) => {
                 response.json().then((data) => {
-                    add_tracks(data.total, data.items);
+                    localStorage.setItem('curr_size', data.total)
+                    if (data.items.length > 0)
+                        add_tracks(data.items);
                 });
             });
+
             curr_size = localStorage.getItem('curr_size');
-                
+
             offset += 100;
         }
     }
 }
 
-function add_tracks(curr_size, curr_songs) {
-    // const response = await fetch(fetch_api_url, fetch_body);
-    // const tracks = await response.json();
-    // curr_size = tracks.total;
-    // curr_songs = tracks.items;
-    localStorage.setItem('curr_size', curr_size);
+function add_tracks(curr_songs) {
 
     let add_uris = [];
 
-    for (let j = 0; j < curr_size; j++) {
+    for (let j = 0; j < curr_songs.length; j++) {
         let song_uri = 'spotify:track:' + curr_songs[j].track.id;
 
         add_uris.push(song_uri);
     }
+
+    console.log(add_uris);
 
     if (add_uris.length > 0) {
         let add_api_url = `https://api.spotify.com/v1/playlists/${new_playlist_id}/tracks`;
@@ -207,13 +208,12 @@ function add_tracks(curr_size, curr_songs) {
             'body': JSON.stringify(add_data)
         };
 
-        fetch(add_api_url, add_body);
+        fetch(add_api_url, add_body).then((response) => {
+            response.json().then((data) => {
+                console.log(data);
+            });
+        });
         //const add_response = await fetch(add_api_url, add_body);
         //let add_json = await add_response.json();
     }
 }
-
-// async function callAPI(method, url, body) {
-    
-    
-// }
