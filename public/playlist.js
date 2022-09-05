@@ -167,45 +167,9 @@ function addSongs() {
             
             fetch(fetch_api_url, fetch_body).then((response) => {
                 response.json().then((data) => {
-                    curr_size = data.total;
-                    curr_songs = data.items;
+                    add_tracks(data.total, data.items);
                 });
             });
-
-            // const response = await fetch(fetch_api_url, fetch_body);
-            // const tracks = await response.json();
-            console.log(curr_size);
-            console.log(curr_songs);
-            // curr_size = tracks.total;
-            //curr_songs = tracks.items;
-
-            for (let j = 0; j < curr_size; j++) {
-                let song_uri = 'spotify:track:' + curr_songs[j].track.id;
-                    
-                add_uris.push(song_uri);
-            }
-            
-            if (add_uris.length > 0) {
-                let add_api_url = `https://api.spotify.com/v1/playlists/${new_playlist_id}/tracks`;
-                //console.log(add_api_url);
-                //console.log(add_uris);
-                let add_data = {
-                    'uris': add_uris
-                };
-
-                let add_body = {
-                    'method': 'POST',
-                    'headers': {
-                        'Authorization': 'Bearer ' + access_token,
-                        'Content-Type': 'application/json'
-                    },
-                    'body': JSON.stringify(add_data)
-                };
-                
-                fetch(add_api_url, add_body);
-                //const add_response = await fetch(add_api_url, add_body);
-                //let add_json = await add_response.json();
-            }
             
             add_uris = [];
             offset += 100;
@@ -214,25 +178,42 @@ function addSongs() {
     }
 }
 
-// async function add_tracks(add_uris) {
-//     let api_url = `https://api.spotify.com/v1/playlists/${new_playlist_id}/tracks`;
+function add_tracks(curr_size, curr_songs) {
+    // const response = await fetch(fetch_api_url, fetch_body);
+    // const tracks = await response.json();
+    console.log(curr_size);
+    console.log(curr_songs);
+    // curr_size = tracks.total;
+    //curr_songs = tracks.items;
 
-//     let data = {
-//         'uris': add_uris
-//     };
+    for (let j = 0; j < curr_size; j++) {
+        let song_uri = 'spotify:track:' + curr_songs[j].track.id;
 
-//     let body = {
-//         'method': 'POST',
-//         'headers': {
-//             'Authorization': 'Bearer ' + access_token,
-//             'Content-Type': 'application/json'
-//         },
-//         'body': JSON.stringify(data)
-//     };
+        add_uris.push(song_uri);
+    }
 
-//     const response = await fetch(api_url, body);
-//     const json = await response.json();
-// }
+    if (add_uris.length > 0) {
+        let add_api_url = `https://api.spotify.com/v1/playlists/${new_playlist_id}/tracks`;
+        //console.log(add_api_url);
+        //console.log(add_uris);
+        let add_data = {
+            'uris': add_uris
+        };
+
+        let add_body = {
+            'method': 'POST',
+            'headers': {
+                'Authorization': 'Bearer ' + access_token,
+                'Content-Type': 'application/json'
+            },
+            'body': JSON.stringify(add_data)
+        };
+
+        fetch(add_api_url, add_body);
+        //const add_response = await fetch(add_api_url, add_body);
+        //let add_json = await add_response.json();
+    }
+}
 
 // async function callAPI(method, url, body) {
     
