@@ -15,7 +15,7 @@ let refresh_token = null;
 
 const server = express();
 server.listen(process.env.PORT || 8888, () => {
-    console.log('starting server at https://spotify-playlist-merge.herokuapp.com/');
+    //console.log('starting server at https://spotify-playlist-merge.herokuapp.com/');
 });
 
 server.use(express.static('public'));

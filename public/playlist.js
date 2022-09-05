@@ -13,7 +13,7 @@ function onPageLoad() {
     btn.addEventListener('click', function onClick() {
         if (selected_items.length > 1) {
             createPlaylist();
-            //window.location.replace('https://spotify-playlist-merge.herokuapp.com/result.html');
+            window.location.replace('https://spotify-playlist-merge.herokuapp.com/result.html');
         } 
     });
     document.getElementById('merge_instructions').appendChild(btn);
@@ -97,12 +97,12 @@ function displayPlaylists() {
                 btn.style.backgroundColor = 'rgb(219, 219, 219)';
                 var index = selected_items.indexOf(btn.getAttribute('name'));
                 selected_items.splice(index, 1);
-                console.log(selected_items);
+                //console.log(selected_items);
             }
             else {
                 btn.style.backgroundColor = 'green';
                 selected_items.push(btn.getAttribute('name'));
-                console.log(selected_items);
+                //console.log(selected_items);
             }
         });
         document.getElementById(pos + row).appendChild(btn);
@@ -179,7 +179,7 @@ async function addSongs() {
             
             if (add_uris.length > 0) {
                 let add_api_url = `https://api.spotify.com/v1/playlists/${new_playlist_id}/tracks`;
-                console.log(add_api_url);
+                //console.log(add_api_url);
                 //console.log(add_uris);
                 let add_data = {
                     'uris': add_uris
