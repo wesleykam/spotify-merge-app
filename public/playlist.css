@@ -1,0 +1,52 @@
+.col {
+    display: inline-block;
+}
+
+/* .left {
+    text-align: center;
+    position: relative;
+    left: -30%;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: center;
+    position: relative;
+    left: 30%;
+} */
+
+.row {
+    text-align: center;
+}
+
+img {
+    position: relative;
+    z-index: 1;
+}
+
+.Playlist_Name {
+    position: relative;
+    z-index: 1;
+}
+
+button.merge {
+    width: 70px;
+    height: 30px;
+}
+
+button.select:hover {
+    background-color: green;
+}
+
+button.select {
+    background-color: rgb(219, 219, 219);
+    width: 140px;
+    height: 160px;
+    border: none;
+    position: relative;
+    top: -150px;
+    z-index: 0;
+}
