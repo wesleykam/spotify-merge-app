@@ -169,6 +169,9 @@ function addSongs() {
                 response.json().then((data) => {
                     curr_size = data.total;
                     curr_songs = data.items;
+                    console.log(data);
+                    console.log(curr_size);
+                    console.log(curr_songs);
                 });
             });
 
