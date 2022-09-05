@@ -15,7 +15,7 @@ let refresh_token = null;
 
 const server = express();
 server.listen(process.env.PORT || 8888, () => {
-    console.log('starting server at localhost:8888');
+    console.log('starting server at https://spotify-playlist-merge.herokuapp.com/');
 });
 
 server.use(express.static('public'));
@@ -78,7 +78,7 @@ server.get('/callback', async function (req, res) {
     // console.log('access_token=' + access_token);
     // console.log('refresh_token=' + refresh_token);
  
-    res.redirect('http://localhost:8888/playlist.html' + '?access_token=' + access_token);
+    res.redirect('https://spotify-playlist-merge.herokuapp.com/playlist.html' + '?access_token=' + access_token);
 });
 
 
@@ -101,7 +101,7 @@ server.get('/refresh', async function (req, res) {
     });
     const new_token = await response.json()
     access_token = new_token.access_token;
-    res.redirect('http://localhost:8888/playlist.html' + '?access_token=' + access_token);
+    res.redirect('https://spotify-playlist-merge.herokuapp.com/playlist.html' + '?access_token=' + access_token);
 });
 
 // merge

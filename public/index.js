@@ -1,5 +1,5 @@
 function authenticate() {
-    window.location.replace('http://localhost:8888/login');
+    window.location.replace('https://spotify-playlist-merge.herokuapp.com/login');
 }
 
 // async function getCode() {
