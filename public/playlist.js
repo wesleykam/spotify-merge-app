@@ -163,7 +163,7 @@ function addSongs() {
                 },
             };
             
-            fetch(api_url, body).then((response) => {
+            fetch(fetch_api_url, body).then((response) => {
                 response.json().then((data) => {
                     tracks = data;
                 });
