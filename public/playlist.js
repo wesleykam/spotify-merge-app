@@ -174,7 +174,6 @@ function addSongs() {
 
             // const response = await fetch(fetch_api_url, fetch_body);
             // const tracks = await response.json();
-            console.log(data);
             console.log(curr_size);
             console.log(curr_songs);
             // curr_size = tracks.total;
