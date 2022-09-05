@@ -150,11 +150,7 @@ function addSongs() {
     for (let i = 0; i < selected_items.length; i++) {
         let playlist_id = selected_items[i];
         let offset = 0;
-        let curr_size = 100;
-        let curr_songs;
-        let add_uris = [];
         
-
         while (offset < curr_size) {
             let fetch_api_url = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks?fields=total,items.track.id&limit=100&offset=${offset}`
 
@@ -170,21 +166,18 @@ function addSongs() {
                     add_tracks(data.total, data.items);
                 });
             });
-            
-            add_uris = [];
             offset += 100;
         }
-        // add_tracks(add_uris);
     }
 }
 
 function add_tracks(curr_size, curr_songs) {
     // const response = await fetch(fetch_api_url, fetch_body);
     // const tracks = await response.json();
-    console.log(curr_size);
-    console.log(curr_songs);
     // curr_size = tracks.total;
     //curr_songs = tracks.items;
+    
+    let add_uris = [];
 
     for (let j = 0; j < curr_size; j++) {
         let song_uri = 'spotify:track:' + curr_songs[j].track.id;
