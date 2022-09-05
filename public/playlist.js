@@ -13,7 +13,7 @@ function onPageLoad() {
     btn.addEventListener('click', function onClick() {
         if (selected_items.length > 1) {
             createPlaylist();
-            //window.location.replace('https://spotify-playlist-merge.herokuapp.com/result.html');
+            window.location.replace('https://spotify-playlist-merge.herokuapp.com/result.html');
         } 
     });
     document.getElementById('merge_instructions').appendChild(btn);
