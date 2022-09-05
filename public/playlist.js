@@ -12,7 +12,7 @@ function onPageLoad() {
     btn.innerText = 'Merge';
     btn.addEventListener('click', function onClick() {
         if (selected_items.length > 1) {
-            mergePlaylists();
+            createPlaylist();
             //window.location.replace('https://spotify-playlist-merge.herokuapp.com/result.html');
         } 
     });
@@ -117,11 +117,6 @@ function displayPlaylists() {
             pos = 'left';
         }
     }
-}
-
-function mergePlaylists() {
-    createPlaylist();
-    // addSongs();
 }
 
 function createPlaylist() {
