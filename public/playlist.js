@@ -146,7 +146,7 @@ function createPlaylist() {
     });
 }
 
-function addSongs() {
+async function addSongs() {
     for (let i = 0; i < selected_items.length; i++) {
         let playlist_id = selected_items[i];
         let offset = 0;
