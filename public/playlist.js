@@ -166,6 +166,8 @@ function addSongs() {
                     add_tracks(data.total, data.items);
                 });
             });
+            curr_size = localStorage.getItem('curr_size');
+                
             offset += 100;
         }
     }
@@ -175,8 +177,9 @@ function add_tracks(curr_size, curr_songs) {
     // const response = await fetch(fetch_api_url, fetch_body);
     // const tracks = await response.json();
     // curr_size = tracks.total;
-    //curr_songs = tracks.items;
-    
+    // curr_songs = tracks.items;
+    localStorage.setItem('curr_size', curr_size);
+
     let add_uris = [];
 
     for (let j = 0; j < curr_size; j++) {
