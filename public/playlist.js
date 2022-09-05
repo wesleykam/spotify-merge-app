@@ -163,9 +163,8 @@ function addSongs() {
                 },
             };
             
-            fetch(fetch_api_url, fetch_body);
-            // const response = await fetch(fetch_api_url, fetch_body);
-            // const tracks = await response.json();
+            const response = await fetch(fetch_api_url, fetch_body);
+            const tracks = await response.json();
 
 
             curr_size = tracks.total;
