@@ -169,20 +169,18 @@ function addSongs() {
                 response.json().then((data) => {
                     curr_size = data.total;
                     curr_songs = data.items;
-                    console.log(data);
-                    console.log(curr_size);
-                    console.log(curr_songs);
                 });
             });
 
             // const response = await fetch(fetch_api_url, fetch_body);
             // const tracks = await response.json();
-
-
+            console.log(data);
+            console.log(curr_size);
+            console.log(curr_songs);
             // curr_size = tracks.total;
-            // let curr_songs = tracks.items;
+            //curr_songs = tracks.items;
 
-            for (let j = 0; j < curr_songs.length; j++) {
+            for (let j = 0; j < curr_size; j++) {
                 let song_uri = 'spotify:track:' + curr_songs[j].track.id;
                     
                 add_uris.push(song_uri);
