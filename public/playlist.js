@@ -13,7 +13,7 @@ function onPageLoad() {
     btn.addEventListener('click', function onClick() {
         if (selected_items.length > 1) {
             createPlaylist();
-            window.location.replace('https://spotify-playlist-merge.herokuapp.com/result.html');
+            //window.location.replace('https://spotify-playlist-merge.herokuapp.com/result.html');
         } 
     });
     document.getElementById('merge_instructions').appendChild(btn);
@@ -146,8 +146,7 @@ function createPlaylist() {
     });
 }
 
-async function addSongs() {
-
+function addSongs() {
     for (let i = 0; i < selected_items.length; i++) {
         let playlist_id = selected_items[i];
         let offset = 0;
@@ -163,9 +162,10 @@ async function addSongs() {
                     'Content-Type': 'application/json'
                 },
             };
-
-            const response = await fetch(fetch_api_url, fetch_body);
-            const tracks = await response.json();
+            
+            fetch(fetch_api_url, fetch_body);
+            // const response = await fetch(fetch_api_url, fetch_body);
+            // const tracks = await response.json();
 
 
             curr_size = tracks.total;
@@ -193,37 +193,38 @@ async function addSongs() {
                     },
                     'body': JSON.stringify(add_data)
                 };
-
-                const add_response = await fetch(add_api_url, add_body);
-                let add_json = await add_response.json();
+                
+                fetch(add_api_url, add_body);
+                //const add_response = await fetch(add_api_url, add_body);
+                //let add_json = await add_response.json();
             }
             
             add_uris = [];
             offset += 100;
         }
-        add_tracks(add_uris);
+        // add_tracks(add_uris);
     }
 }
 
-async function add_tracks(add_uris) {
-    let api_url = `https://api.spotify.com/v1/playlists/${new_playlist_id}/tracks`;
+// async function add_tracks(add_uris) {
+//     let api_url = `https://api.spotify.com/v1/playlists/${new_playlist_id}/tracks`;
 
-    let data = {
-        'uris': add_uris
-    };
+//     let data = {
+//         'uris': add_uris
+//     };
 
-    let body = {
-        'method': 'POST',
-        'headers': {
-            'Authorization': 'Bearer ' + access_token,
-            'Content-Type': 'application/json'
-        },
-        'body': JSON.stringify(data)
-    };
+//     let body = {
+//         'method': 'POST',
+//         'headers': {
+//             'Authorization': 'Bearer ' + access_token,
+//             'Content-Type': 'application/json'
+//         },
+//         'body': JSON.stringify(data)
+//     };
 
-    const response = await fetch(api_url, body);
-    const json = await response.json();
-}
+//     const response = await fetch(api_url, body);
+//     const json = await response.json();
+// }
 
 // async function callAPI(method, url, body) {
     
