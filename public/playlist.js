@@ -163,8 +163,14 @@ async function addSongs() {
                 },
             };
             
-            const response = await fetch(fetch_api_url, fetch_body);
-            const tracks = await response.json();
+            fetch(api_url, body).then((response) => {
+                response.json().then((data) => {
+                    tracks = data;
+                });
+            });
+
+            // const response = await fetch(fetch_api_url, fetch_body);
+            // const tracks = await response.json();
 
 
             curr_size = tracks.total;
