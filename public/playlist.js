@@ -45,7 +45,7 @@ async function getPlaylists() {
 
     let body = {
         'headers': {
-            'Authorization': 'Bearer ', //+ access_token,
+            'Authorization': 'Bearer ' + access_token,
             'Content-Type': 'application/json'
         }
     };
