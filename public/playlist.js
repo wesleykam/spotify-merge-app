@@ -24,7 +24,11 @@ function onPageLoad() {
 
 
             //window.location.replace('http://localhost:8888/result.html');
+<<<<<<< HEAD
+        } 
+=======
         }
+>>>>>>> heroku
     });
     document.getElementById('merge_instructions').appendChild(btn);
     saveTokens();
@@ -45,14 +49,14 @@ async function getPlaylists() {
 
     let body = {
         'headers': {
-            'Authorization': 'Bearer ' + access_token,
+            'Authorization': 'Bearer ', //+ access_token,
             'Content-Type': 'application/json'
         }
     };
 
     const response = await fetch(api_url, body);
     const json = await response.json();
-    // console.log(json);
+    console.log(json);
     playlists = json.items;
 
     displayPlaylists();
@@ -169,7 +173,11 @@ async function addSongs() {
                     'Content-Type': 'application/json'
                 },
             };
+<<<<<<< HEAD
+            
+=======
 
+>>>>>>> heroku
             // fetch(fetch_api_url, fetch_body).then((response) => {
             //     response.json().then((data) => {
             //         localStorage.setItem('curr_size', data.total);
@@ -233,6 +241,7 @@ async function addSongs() {
 //         let add_data = {
 //             'uris': add_uris
 //         };
+<<<<<<< HEAD
 
 //         let add_body = {
 //             'method': 'POST',
@@ -243,6 +252,18 @@ async function addSongs() {
 //             'body': JSON.stringify(add_data)
 //         };
 
+=======
+
+//         let add_body = {
+//             'method': 'POST',
+//             'headers': {
+//                 'Authorization': 'Bearer ' + access_token,
+//                 'Content-Type': 'application/json'
+//             },
+//             'body': JSON.stringify(add_data)
+//         };
+
+>>>>>>> heroku
 //         fetch(add_api_url, add_body).catch((error) => {
 //             console.log(error);
 //         });
