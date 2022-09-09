@@ -52,7 +52,7 @@ async function getPlaylists() {
 
     const response = await fetch(api_url, body);
     const json = await response.json();
-    console.log(json);
+    // console.log(json);
     playlists = json.items;
 
     displayPlaylists();
