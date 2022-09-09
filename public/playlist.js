@@ -209,7 +209,7 @@ async function addSongs() {
                 };
 
                 fetch(add_api_url, add_body).then((response) => {
-                    console.log(response);
+                    //console.log(response);
                 });
             }
 
