@@ -1,8 +1,11 @@
+// npm install express
 const express = require('express');
 let cors = require('cors')
 const querystring = require('node:querystring');
 const { access } = require('node:fs');
+// npm install dotenv
 require('dotenv').config();
+// node-fetch
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 
@@ -14,8 +17,13 @@ let access_token = null;
 let refresh_token = null;
 
 const server = express();
+<<<<<<< HEAD
 server.listen(8888, () => {
     console.log('starting server at http://localhost:8888');
+=======
+server.listen(process.env.PORT || 8888, () => {
+    console.log('starting server at https://spotify-playlist-merge.herokuapp.com/');
+>>>>>>> heroku
 });
 
 server.use(express.static('public'));
