@@ -23,7 +23,7 @@ function onPageLoad() {
             document.getElementById('merge_instructions').appendChild(div);
 
 
-            //window.location.replace('http://localhost:8888/result.html');
+            //window.location.replace('https://spotify-playlist-merge.herokuapp.com/result.html');
         } 
     });
     document.getElementById('merge_instructions').appendChild(btn);
