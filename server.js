@@ -1,8 +1,11 @@
+// npm install express
 const express = require('express');
 let cors = require('cors')
 const querystring = require('node:querystring');
 const { access } = require('node:fs');
+// npm install dotenv
 require('dotenv').config();
+// node-fetch
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 

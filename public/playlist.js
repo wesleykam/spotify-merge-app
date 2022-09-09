@@ -13,6 +13,16 @@ function onPageLoad() {
     btn.addEventListener('click', function onClick() {
         if (selected_items.length > 1) {
             createPlaylist();
+
+            // Replace merge button with merge status
+            btn.remove();
+            const div = document.createElement('div');
+            div.className = "merge_status";
+            const content = document.createTextNode("merge complete!");
+            div.appendChild(content);
+            document.getElementById('merge_instructions').appendChild(div);
+
+
             //window.location.replace('http://localhost:8888/result.html');
         }
     });
@@ -97,12 +107,12 @@ function displayPlaylists() {
                 btn.style.backgroundColor = 'rgb(219, 219, 219)';
                 var index = selected_items.indexOf(btn.getAttribute('name'));
                 selected_items.splice(index, 1);
-                console.log(selected_items);
+                //console.log(selected_items);
             }
             else {
                 btn.style.backgroundColor = 'green';
                 selected_items.push(btn.getAttribute('name'));
-                console.log(selected_items);
+                //console.log(selected_items);
             }
         });
         document.getElementById(pos + row).appendChild(btn);
@@ -118,7 +128,6 @@ function displayPlaylists() {
         }
     }
 }
-
 
 function createPlaylist() {
     const api_url = 'https://api.spotify.com/v1/me/playlists';
@@ -136,9 +145,6 @@ function createPlaylist() {
         'body': JSON.stringify(data)
     };
 
-    // const response = await fetch(api_url, body);
-    // const json = await response.json();
-
     fetch(api_url, body).then((response) => {
         response.json().then((data) => {
             new_playlist_id = data.id;
@@ -148,11 +154,11 @@ function createPlaylist() {
 }
 
 async function addSongs() {
+    let curr_size = 100;
 
     for (let i = 0; i < selected_items.length; i++) {
         let playlist_id = selected_items[i];
         let offset = 0;
-        let curr_size = 100;
 
         while (offset < curr_size) {
             let fetch_api_url = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks?fields=total,items.track.id&limit=100&offset=${offset}`
@@ -164,56 +170,81 @@ async function addSongs() {
                 },
             };
 
-            fetch(fetch_api_url, fetch_body).then((response) => {
-                response.json().then((data) => {
-                    localStorage.setItem('curr_size', data.total)
-                    if (data.items.length > 0)
-                        add_tracks(data.items);
-                });
-            });
+            // fetch(fetch_api_url, fetch_body).then((response) => {
+            //     response.json().then((data) => {
+            //         localStorage.setItem('curr_size', data.total);
+            //         add_tracks(data.items);
+            //     });
+            // });
+            // curr_size = localStorage.getItem('curr_size');
 
-            curr_size = localStorage.getItem('curr_size');
+            const fetch_response = await fetch(fetch_api_url, fetch_body);
+            const fetch_json = await fetch_response.json();
+
+            curr_size = fetch_json.total;
+            curr_songs = fetch_json.items;
+
+            let add_uris = [];
+
+            for (let j = 0; j < curr_songs.length; j++) {
+                let song_uri = 'spotify:track:' + curr_songs[j].track.id;
+
+                add_uris.push(song_uri);
+            }
+
+            if (add_uris.length > 0) {
+                let add_api_url = `https://api.spotify.com/v1/playlists/${new_playlist_id}/tracks`;
+
+                let add_data = {
+                    'uris': add_uris
+                };
+
+                let add_body = {
+                    'method': 'POST',
+                    'headers': {
+                        'Authorization': 'Bearer ' + access_token,
+                        'Content-Type': 'application/json'
+                    },
+                    'body': JSON.stringify(add_data)
+                };
+
+                fetch(add_api_url, add_body).then((response) => {
+                    console.log(response);
+                });
+            }
 
             offset += 100;
         }
     }
 }
 
-function add_tracks(curr_songs) {
+// function add_tracks(curr_songs) {
+//     let add_uris = [];
 
-    let add_uris = [];
+//     for (let j = 0; j < curr_songs.length; j++) {
+//         let song_uri = 'spotify:track:' + curr_songs[j].track.id;
 
-    for (let j = 0; j < curr_songs.length; j++) {
-        let song_uri = 'spotify:track:' + curr_songs[j].track.id;
+//         add_uris.push(song_uri);
+//     }
 
-        add_uris.push(song_uri);
-    }
+//     if (add_uris.length > 0) {
+//         let add_api_url = `https://api.spotify.com/v1/playlists/${new_playlist_id}/tracks`;
 
-    console.log(add_uris);
+//         let add_data = {
+//             'uris': add_uris
+//         };
 
-    if (add_uris.length > 0) {
-        let add_api_url = `https://api.spotify.com/v1/playlists/${new_playlist_id}/tracks`;
-        //console.log(add_api_url);
-        //console.log(add_uris);
-        let add_data = {
-            'uris': add_uris
-        };
+//         let add_body = {
+//             'method': 'POST',
+//             'headers': {
+//                 'Authorization': 'Bearer ' + access_token,
+//                 'Content-Type': 'application/json'
+//             },
+//             'body': JSON.stringify(add_data)
+//         };
 
-        let add_body = {
-            'method': 'POST',
-            'headers': {
-                'Authorization': 'Bearer ' + access_token,
-                'Content-Type': 'application/json'
-            },
-            'body': JSON.stringify(add_data)
-        };
-
-        fetch(add_api_url, add_body).then((response) => {
-            response.json().then((data) => {
-                console.log(data);
-            });
-        });
-        //const add_response = await fetch(add_api_url, add_body);
-        //let add_json = await add_response.json();
-    }
-}
+//         fetch(add_api_url, add_body).catch((error) => {
+//             console.log(error);
+//         });
+//     }
+// }
